@@ -32,3 +32,14 @@ gulp.task('js', function () {
 });
 
 gulp.task('copy', ['html', 'css', 'js']);
+
+var inject = require('gulp-inject');
+
+gulp.task('inject', ['copy'], function () {
+  var css = gulp.src(paths.tmpCSS);
+  var js = gulp.src(paths.tmpJS);
+  return gulp.src(paths.tmpIndex)
+    .pipe(inject( css, { relative:true } ))
+    .pipe(inject( js, { relative:true } ))
+    .pipe(gulp.dest(paths.tmp));
+});
