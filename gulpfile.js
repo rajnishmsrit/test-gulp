@@ -17,9 +17,7 @@ var paths = {
   distJS: 'dist/**/*.js'
 };
 
-gulp.task('default', function () {
-  console.log('Hello World!');
-});
+gulp.task('default', ['watch']);
 
 gulp.task('html', function () {
   return gulp.src(paths.srcHTML).pipe(gulp.dest(paths.tmp));
@@ -50,4 +48,8 @@ gulp.task('serve', ['inject'], function () {
       port: 3000,
       livereload: true
     }));
+});
+
+gulp.task('watch', ['serve'], function () {
+  gulp.watch(paths.src, ['inject']);
 });
