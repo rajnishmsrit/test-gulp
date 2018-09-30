@@ -15,7 +15,20 @@ var paths = {
   distJS: 'dist/**/*.js'
 };
 
-
 gulp.task('default', function () {
   console.log('Hello World!');
 });
+
+gulp.task('html', function () {
+  return gulp.src(paths.srcHTML).pipe(gulp.dest(paths.tmp));
+});
+
+gulp.task('css', function () {
+  return gulp.src(paths.srcCSS).pipe(gulp.dest(paths.tmp));
+});
+
+gulp.task('js', function () {
+  return gulp.src(paths.srcJS).pipe(gulp.dest(paths.tmp));
+});
+
+gulp.task('copy', ['html', 'css', 'js']);
