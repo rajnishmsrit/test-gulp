@@ -1,4 +1,6 @@
 var gulp = require('gulp');
+var inject = require('gulp-inject');
+var webserver = require('gulp-webserver');
 
 var paths = {
   src: 'src/**/*',
@@ -33,8 +35,6 @@ gulp.task('js', function () {
 
 gulp.task('copy', ['html', 'css', 'js']);
 
-var inject = require('gulp-inject');
-
 gulp.task('inject', ['copy'], function () {
   var css = gulp.src(paths.tmpCSS);
   var js = gulp.src(paths.tmpJS);
@@ -42,4 +42,12 @@ gulp.task('inject', ['copy'], function () {
     .pipe(inject( css, { relative:true } ))
     .pipe(inject( js, { relative:true } ))
     .pipe(gulp.dest(paths.tmp));
+});
+
+gulp.task('serve', ['inject'], function () {
+  return gulp.src(paths.tmp)
+    .pipe(webserver({
+      port: 3000,
+      livereload: true
+    }));
 });
